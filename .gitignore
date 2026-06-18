@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.next/
+out/
+.env
+.env.*
+!.env.example
+.turbo/
+drizzle/migrations/
+.gemini/
+coverage/
+*.log
+.DS_Store

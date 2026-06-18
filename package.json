@@ -1,0 +1,15 @@
+{
+  "name": "skillsphere",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "server"
+  ],
+  "scripts": {
+    "dev": "npx concurrently \"npm run dev --workspace=web\" \"npm run dev --workspace=@skillsphere/server\"",
+    "build": "npm run build --workspaces",
+    "lint": "npm run lint --workspaces"
+  }
+}
