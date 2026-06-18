@@ -10,9 +10,17 @@
 [![Clerk](https://img.shields.io/badge/Clerk-v7.3.7-6C47FF?style=for-the-badge&logo=clerk)](https://clerk.com)
 [![Razorpay](https://img.shields.io/badge/Razorpay-v2.9.6-02042B?style=for-the-badge&logo=razorpay)](https://razorpay.com)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-all--MiniLM--L6--v2-FFD21F?style=for-the-badge&logo=huggingface)](https://huggingface.co)
-[![Status](https://img.shields.io/badge/Status-MVP_Complete-8B6CEF?style=for-the-badge)](PLACEHOLDER_REPO_URL)
+[![Status](https://img.shields.io/badge/Status-Live_on_Vercel-success?style=for-the-badge)](https://skill-sphere-web-chi.vercel.app)
 
-> **MVP — Feature Complete.** All 15 core modules are implemented and functional in development mode with live Supabase, Clerk, Razorpay (test mode), and HuggingFace integrations. Production deployment to Vercel is the planned next step. This project was developed as a capstone for the **Nayoda Full-Stack Developer Internship Program**.
+> **MVP — Feature Complete.** All 15 core modules are implemented and functional with live Supabase, Clerk, Razorpay (test mode), and HuggingFace integrations. This project was developed as a capstone for the **Nayoda Full-Stack Developer Internship Program**.
+
+---
+
+## 🚀 Live Production Links
+
+- **Frontend Application:** [https://skill-sphere-web-chi.vercel.app](https://skill-sphere-web-chi.vercel.app)
+- **Backend API:** Hosted on the same domain at `https://skill-sphere-web-chi.vercel.app/api/*` (Next.js Route Handlers)
+- **API Documentation:** Standard REST endpoints returning JSON (see code for `/api` routes)
 
 ---
 
