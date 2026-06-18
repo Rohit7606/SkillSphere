@@ -12,3 +12,16 @@ drizzle/migrations/
 coverage/
 *.log
 .DS_Store
+N a y o d a   -   F u l l   S t a c k   D e v   I n t e r n s h i p   ( P r o j e c t ) . p d f  
+ R e f e r e n c e   I m a g e s /  
+ * . p d f  
+ 
+*.pdf
+scratch/
+tools/
+findings.md
+gemini.md
+progress.md
+task_plan.md
+architecture/
+PLAN.md
