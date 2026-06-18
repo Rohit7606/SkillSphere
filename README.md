@@ -10,17 +10,9 @@
 [![Clerk](https://img.shields.io/badge/Clerk-v7.3.7-6C47FF?style=for-the-badge&logo=clerk)](https://clerk.com)
 [![Razorpay](https://img.shields.io/badge/Razorpay-v2.9.6-02042B?style=for-the-badge&logo=razorpay)](https://razorpay.com)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-all--MiniLM--L6--v2-FFD21F?style=for-the-badge&logo=huggingface)](https://huggingface.co)
-[![Status](https://img.shields.io/badge/Status-Live_on_Vercel-success?style=for-the-badge)](https://skill-sphere-web-chi.vercel.app)
+[![Status](https://img.shields.io/badge/Status-Deployed-8B6CEF?style=for-the-badge)](https://skill-sphere-web-chi.vercel.app)
 
-> **MVP — Feature Complete.** All 15 core modules are implemented and functional with live Supabase, Clerk, Razorpay (test mode), and HuggingFace integrations. This project was developed as a capstone for the **Nayoda Full-Stack Developer Internship Program**.
-
----
-
-## 🚀 Live Production Links
-
-- **Frontend Application:** [https://skill-sphere-web-chi.vercel.app](https://skill-sphere-web-chi.vercel.app)
-- **Backend API:** Hosted on the same domain at `https://skill-sphere-web-chi.vercel.app/api/*` (Next.js Route Handlers)
-- **API Documentation:** Standard REST endpoints returning JSON (see code for `/api` routes)
+> **Live in Production.** All 15 core modules are deployed and functional with live Supabase, Clerk, Razorpay (test mode), and HuggingFace integrations. This project was developed as a capstone for the **Nayoda Full-Stack Developer Internship Program**.
 
 ---
 
@@ -248,6 +240,41 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 
 ---
 
+## 🚀 Live Deployment
+
+#### Production URLs
+
+- **Frontend Application:** [`https://skill-sphere-web-chi.vercel.app`](https://skill-sphere-web-chi.vercel.app)
+- **Backend API:** PLACEHOLDER_BACKEND_URL
+- **API Documentation:** PLACEHOLDER_API_DOCS_URL
+
+#### Environment Configuration
+
+```bash
+# Frontend (.env.local)
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
+NEXT_PUBLIC_SOCKET_URL=PLACEHOLDER_SOCKET_SERVER_URL
+
+# Backend (.env)
+DATABASE_URL=postgresql://postgres:password@db.xxx.supabase.co:5432/postgres
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
+CLERK_SECRET_KEY=sk_test_...
+RAZORPAY_KEY_ID=rzp_test_...
+RAZORPAY_KEY_SECRET=...
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...
+HUGGINGFACE_API_KEY=hf_...
+UPSTASH_REDIS_REST_URL=https://xxx.upstash.io
+UPSTASH_REDIS_REST_TOKEN=...
+```
+
+> The Socket.IO server (for real-time chat and notifications) requires a separate long-lived host (e.g., Railway or Render) since Vercel's serverless functions cannot maintain persistent WebSocket connections. Update `NEXT_PUBLIC_SOCKET_URL` once that deployment is finalized.
+
+---
+
 ## 💻 Local Development Setup
 
 ### Prerequisites
@@ -371,7 +398,7 @@ cd server && npm run dev
 | AI Matching (HuggingFace) | ✅ **Active** | `all-MiniLM-L6-v2` matching live; reputation-score fallback in place |
 | Escrow Payments (Razorpay) | 🔄 **In Progress** | Test mode functional; payment signature verification pending |
 | Admin RBAC | 🔄 **In Progress** | RBAC defined in middleware; enforcement temporarily disabled for MVP demo |
-| Production Deployment (Vercel) | ⏳ **Planned** | Socket.IO server requires separate host (Railway/Render) |
+| Production Deployment (Vercel) | ✅ **Production** | Frontend live at `skill-sphere-web-chi.vercel.app`; Socket.IO server deployment pending on a separate host (Railway/Render) |
 | Automated Test Suite | ⏳ **Planned** | No unit, integration, or E2E tests implemented yet |
 
 ---
