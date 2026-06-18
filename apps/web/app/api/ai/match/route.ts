@@ -103,15 +103,15 @@ export async function POST(req: Request) {
         } else {
           console.warn("HF API error, falling back to basic sorting");
           // Fallback: sort by reputation and assign mock descending scores
-          matchedFreelancers = matchedFreelancers.sort((a, b) => b.reputationScore - a.reputationScore).map((f, i) => ({ ...f, matchScore: Math.max(50, 95 - i * 5) }));
+          matchedFreelancers = matchedFreelancers.sort((a, b) => (b.reputationScore || 0) - (a.reputationScore || 0)).map((f, i) => ({ ...f, matchScore: Math.max(50, 95 - i * 5) }));
         }
       } catch (hfError) {
          console.warn("HF API network error, falling back to basic sorting", hfError);
-         matchedFreelancers = matchedFreelancers.sort((a, b) => b.reputationScore - a.reputationScore).map((f, i) => ({ ...f, matchScore: Math.max(50, 95 - i * 5) }));
+         matchedFreelancers = matchedFreelancers.sort((a, b) => (b.reputationScore || 0) - (a.reputationScore || 0)).map((f, i) => ({ ...f, matchScore: Math.max(50, 95 - i * 5) }));
       }
     } else {
       // Fallback if no token
-      matchedFreelancers = matchedFreelancers.sort((a, b) => b.reputationScore - a.reputationScore).map((f, i) => ({ ...f, matchScore: Math.max(50, 95 - i * 5) }));
+      matchedFreelancers = matchedFreelancers.sort((a, b) => (b.reputationScore || 0) - (a.reputationScore || 0)).map((f, i) => ({ ...f, matchScore: Math.max(50, 95 - i * 5) }));
     }
 
     // Limit to top 5 recommendations

@@ -2,7 +2,7 @@ import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 import { config } from 'dotenv';
 config({ path: 'apps/web/.env' });
-const client = postgres(process.env.DATABASE_URL);
+const client = postgres(process.env.DATABASE_URL as string);
 const db = drizzle(client);
 
 async function main() {

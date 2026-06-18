@@ -156,7 +156,7 @@ export function ProfileHeader({ user, freelancer }: ProfileHeaderProps) {
             <div className="border-4 border-surface bg-background h-32 w-32 rounded-full flex items-center justify-center overflow-hidden shadow-md relative group-hover:border-accent-primary/20 transition-colors">
               {avatarImage || user.avatarUrl ? (
                 <img 
-                  src={avatarImage || user.avatarUrl} 
+                  src={avatarImage || user.avatarUrl || ''} 
                   alt="Profile" 
                   className="w-full h-full max-w-none origin-center" 
                   style={{ 
