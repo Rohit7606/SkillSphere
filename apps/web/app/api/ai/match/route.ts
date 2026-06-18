@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '../../../../lib/db';
-import { gigs, freelancers } from '../../../../lib/db/schema';
+import { gigs, freelancers, users } from '../../../../lib/db/schema';
 import { eq, desc } from 'drizzle-orm';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';

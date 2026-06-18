@@ -17,7 +17,7 @@ export default async function PaymentsPage() {
   const [freelancer] = await db.select().from(freelancers).where(eq(freelancers.userId, dbUser.id));
   const [client] = await db.select().from(clients).where(eq(clients.userId, dbUser.id));
 
-  let fetchedPayments = [];
+  let fetchedPayments: any[] = [];
   let isClient = false;
 
   if (client) {

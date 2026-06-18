@@ -47,7 +47,7 @@ export default async function AnalyticsPage() {
     .innerJoin(users, eq(users.id, freelancers.userId))
     .where(eq(payments.clientId, client.id));
 
-    const topHiresMap = new Map<string, { name: string, amount: number, initials: string, color: string }>();
+    const topHiresMap = new Map<string, { name: string, amount: number, initials: string, color: string, role: string }>();
     const colors = ['from-indigo-500 to-purple-500', 'from-pink-500 to-rose-500', 'from-emerald-500 to-teal-500'];
     let colorIdx = 0;
     
@@ -56,7 +56,8 @@ export default async function AnalyticsPage() {
         name: p.freelancerName || (p.freelancerEmail ? p.freelancerEmail.split('@')[0] : 'Freelancer'), 
         amount: 0, 
         initials: p.freelancerName ? p.freelancerName.charAt(0).toUpperCase() : (p.freelancerEmail ? p.freelancerEmail.charAt(0).toUpperCase() : 'F'),
-        color: colors[colorIdx++ % colors.length]
+        color: colors[colorIdx++ % colors.length],
+        role: 'Freelancer'
       };
       existing.amount += (p.amount || 0);
       topHiresMap.set(p.freelancerId, existing);
