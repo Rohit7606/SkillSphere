@@ -108,3 +108,32 @@ export async function uploadAvatar(formData: FormData) {
   revalidatePath('/dashboard/profile');
   return url;
 }
+
+export async function updateSkills(skills: string[]) {
+  try {
+    const dbUser = await getDbUser();
+    const [freelancer] = await db.select().from(freelancers).where(eq(freelancers.userId, dbUser.id));
+    
+    if (freelancer) {
+      await db.update(freelancers)
+        .set({ skills })
+        .where(eq(freelancers.id, freelancer.id))
+        .returning();
+    } else {
+      await db.insert(freelancers)
+        .values({
+          userId: dbUser.id,
+          skills,
+          bio: '',
+          location: '',
+          hourlyRate: 0,
+          reputationScore: 0
+        })
+        .returning();
+    }
+  } catch (error) {
+    console.error("Failed to update skills in database:", error);
+    throw new Error("Failed to save skills");
+  }
+  revalidatePath('/dashboard', 'layout');
+}

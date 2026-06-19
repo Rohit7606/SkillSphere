@@ -53,7 +53,7 @@ export function BookMeetingModal({ freelancerId, freelancerName }: { freelancerI
     <>
       <button 
         onClick={() => setIsOpen(true)}
-        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-surface border border-border hover:bg-surface-hover text-foreground font-medium rounded-md transition-colors"
+        className="w-full flex items-center justify-center gap-2 px-6 py-2.5 bg-accent-primary hover:bg-accent-hover text-white font-semibold rounded-lg shadow-sm transition-all hover:shadow-md"
       >
         <Calendar className="h-4 w-4" />
         Request Meeting

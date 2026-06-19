@@ -18,15 +18,11 @@
 
 ## Problem Statement
 
-- **Manual, Keyword-Only Discovery:** Traditional freelance platforms such as Upwork and Fiverr rely on basic keyword search and manual browsing, producing noisy results that waste both client time and freelancer visibility. Without semantic understanding of skill requirements, high-quality but differently-worded profiles are systematically buried.
-
-- **No Proximity-Aware Matching:** Existing global marketplaces treat a client in Chennai the same as one in Berlin, ignoring the practical value of geographic proximity for time zone alignment, in-person handoffs, and local market pricing. There is no native mechanism to surface talent in your own city or region first.
-
-- **Fragmented Collaboration Workflow:** Clients must juggle separate tools for communication (Slack), task tracking (Trello), file exchange (Google Drive), and payment (bank transfer or PayPal) after finding a freelancer. The lack of an integrated workspace multiplies coordination overhead and increases project failure rates.
-
-- **Unprotected, Trust-Deficit Payments:** Freelancers routinely absorb the risk of non-payment after delivering work, while clients bear the risk of paying upfront for undelivered output. The absence of a structured escrow system disincentivises both parties from engaging with unfamiliar counterparts.
-
-- **Opaque Reputation Systems:** Star ratings in isolation fail to distinguish between high-volume low-quality reviewers and verified project completions. Freelancers with few but successful engagements are ranked below those with inflated review counts, undermining platform trust.
+- **Manual, Keyword-Only Discovery:** Platforms like Upwork and Fiverr rely on basic keyword search, burying high-quality freelancers whose profiles are simply worded differently from the search query.
+- **No Proximity-Aware Matching:** Global marketplaces treat a client in Chennai the same as one in Berlin, with no native way to prioritize local talent for time zone, pricing, or in-person needs.
+- **Fragmented Collaboration Workflow:** Clients juggle Slack, Trello, Drive, and a separate payment app for every freelancer, multiplying coordination overhead and project failure risk.
+- **Unprotected, Trust-Deficit Payments:** Freelancers risk non-payment after delivery while clients risk paying upfront for nothing, and neither side has a structured escrow to fall back on.
+- **Opaque Reputation Systems:** Star ratings alone can't distinguish verified project completions from high-volume low-quality reviews, ranking inflated profiles above genuinely reliable freelancers.
 
 There is a critical need for a **hyperlocal, AI-augmented freelance marketplace** that unifies intelligent matching, secure milestone-based escrow, real-time collaboration, and verified reputation into a single platform.
 
@@ -52,18 +48,11 @@ The platform aims to:
 This project aligns with the following United Nations Sustainable Development Goals:
 
 ### SDG 8: Decent Work and Economic Growth
-- **Target 8.3:** SkillSphere directly supports micro-entrepreneurship by providing freelancers with a professional marketplace to monetize their skills at a fair, self-set hourly rate. The milestone-based escrow system ensures payment security, lowering the barrier to freelance engagement for independent workers who lack institutional protections.
-- **Target 8.10:** The Razorpay payment integration enables digital financial inclusion for Indian freelancers by supporting UPI, net banking, and card payments — bringing gig economy earnings into the formal digital economy rather than informal cash transactions.
-
-### SDG 9: Industry, Innovation, and Infrastructure
-- **Target 9.1:** SkillSphere provides resilient digital infrastructure connecting clients with skilled professionals, fostering inclusive access to the gig economy through a web-based platform accessible on any modern device without requiring specialized hardware.
-- **Target 9.5:** The integration of HuggingFace sentence-transformer models for AI-powered matching demonstrates applied machine learning innovation within a production-grade marketplace, advancing the sophistication of talent discovery technology.
+- **Target 8.3:** Milestone-based escrow lowers the risk barrier to freelance engagement, supporting micro-entrepreneurship for independent workers who lack institutional protections.
+- **Target 8.10:** Razorpay integration (UPI, net banking, cards) brings gig economy earnings into the formal digital economy for Indian freelancers.
 
 ### SDG 10: Reduced Inequalities
-- **Target 10.2:** By surfacing freelancers based on semantic skill relevance rather than marketing budget or paid placement, SkillSphere reduces the structural advantage enjoyed by established platform accounts. An individual expert with a well-written profile can compete on equal footing with a veteran user.
-
-### SDG 17: Partnerships for the Goals
-- **Target 17.8:** The platform's technology stack — built entirely on open and accessible services (Supabase PostgreSQL, Next.js, Socket.IO) — demonstrates that production-grade digital infrastructure can be assembled by developers in emerging markets using globally available tools, fostering technology capability at the local level.
+- **Target 10.2:** Surfacing freelancers by semantic skill relevance rather than marketing spend or account age lets an individual with a well-written profile compete on equal footing with established users.
 
 ---
 
@@ -76,20 +65,20 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 <img width="2752" height="1536" alt="SkillSphere Architecture Diagram" src="PLACEHOLDER_HERO_IMAGE" />
 *Three-package monorepo showing the Next.js web app, Express Socket.IO server, and shared Zod schema library communicating with Supabase, Clerk, Razorpay, Cloudinary, HuggingFace, and Upstash Redis.*
 
-1. **User Registration & Role Selection:** A new user signs up via Clerk's hosted `<SignUp>` component (email or Google OAuth). After email verification, the `onboarding` page presents a role picker. The `onboardingAction` Server Action creates a record in the Supabase `users` table and provisions either a `clients` or `freelancers` profile row, storing the Clerk ID as a bridge key.
+1. **User Registration & Role Selection:** User signs up via Clerk (`<SignUp>`, email or Google OAuth), then picks a role on the onboarding page. The `onboardingAction` Server Action creates a `users` row plus a `clients` or `freelancers` profile, keyed by Clerk ID.
 
-2. **Gig Creation & Validation:** The Client fills the `CreateGigModal` form. `React Hook Form` manages field state; `Zod` validates the payload client-side before the `createGigAction` Server Action is invoked. The action authenticates via Clerk's `auth()`, resolves the internal client profile, inserts the gig record via `Drizzle ORM`, and invalidates the Next.js cache with `revalidatePath`.
+2. **Gig Creation & Validation:** Client submits `CreateGigModal`, validated client-side by `Zod` via `React Hook Form`. The `createGigAction` Server Action authenticates with Clerk, inserts the gig via `Drizzle ORM`, and revalidates the cache.
 
-3. **AI-Powered Freelancer Matching:** The Client triggers "Find AI Matches" from the gig detail page. A `POST /api/ai/match` request is rate-limited at 20 requests/minute per user via **Upstash Redis** sliding window. The endpoint fetches the gig description and all freelancer bios from Supabase, sends them as a sentence-similarity payload to **HuggingFace's `all-MiniLM-L6-v2` model**, receives cosine similarity scores, ranks freelancers, and returns the top 5 with match percentages to the `AiMatchPanel` component.
-   - *Fallback:* If HuggingFace is unavailable, the system degrades gracefully to reputation-score-based sorting.
+3. **AI-Powered Freelancer Matching:** `POST /api/ai/match` (rate-limited 20/min via **Upstash Redis**) sends the gig description and freelancer bios to **HuggingFace's `all-MiniLM-L6-v2`**, ranks results by cosine similarity, and returns the top 5 to `AiMatchPanel`.
+   - *Fallback:* If HuggingFace is unavailable, degrades to reputation-score sorting.
 
-4. **Proposal & Acceptance Flow:** Freelancers browse open gigs via the advanced search engine (PostgreSQL `ILIKE` on title, description, and location) and submit proposals through the `SubmitProposalModal`. Duplicate proposal detection and Zod validation (`bidAmount > 0`, `description` 20–1000 chars) enforce data integrity. When the client accepts via `POST /api/proposals/[id]/accept`, a Socket.IO notification is pushed to the freelancer's private room.
+4. **Proposal & Acceptance Flow:** Freelancers find gigs via `ILIKE` search and submit `SubmitProposalModal` (Zod-validated, duplicate-checked). Client acceptance via `POST /api/proposals/[id]/accept` pushes a Socket.IO notification to the freelancer.
 
-5. **Escrow Payment via Razorpay:** The Client clicks "Fund Escrow" on the gig detail page. `POST /api/payments/create-order` creates a Razorpay order; the Razorpay checkout modal captures payment. `POST /api/payments/verify` validates the payment, inserts a `payments` record with `escrowStatus: 'held'`, and advances the gig to `in_progress`. HMAC-SHA256 webhook verification on `POST /api/payments/razorpay-webhook` ensures event authenticity.
+5. **Escrow Payment via Razorpay:** `POST /api/payments/create-order` opens Razorpay checkout; `POST /api/payments/verify` confirms payment, sets `escrowStatus: 'held'`, and moves the gig to `in_progress`. Webhooks are HMAC-SHA256 verified.
 
-6. **Real-Time Chat & Milestone Tracking:** Accepted proposal parties join a gig-scoped Socket.IO room via `join_room`. Messages are persisted in the `messages` table via REST and broadcast live via `receive_message`. The `ProjectProgressTracker` component visualises the milestone JSON array (`pending → submitted → completed`). When the client approves the final milestone, the API sets `escrowStatus: 'released'` and marks the gig `completed`.
+6. **Real-Time Chat & Milestone Tracking:** Parties join a Socket.IO room (`join_room`); messages persist to the `messages` table. `ProjectProgressTracker` visualizes milestones (`pending → submitted → completed`); final approval sets `escrowStatus: 'released'`.
 
-7. **Dispute Resolution & Admin Oversight:** Either party can raise a dispute via the `RaiseDisputeModal`, flagging the gig as `disputed`. Admins access the `/admin/disputes` panel to review evidence and resolve with one of three outcomes — `resolved_client` (refund), `resolved_freelancer` (payment release), or `resolved_split` (partial). The Admin Dashboard aggregates platform-wide KPIs (user counts, gig statistics, revenue metrics) and allows user suspension toggles.
+7. **Dispute Resolution & Admin Oversight:** Either party can flag a gig `disputed` via `RaiseDisputeModal`. Admins resolve via `/admin/disputes` as `resolved_client`, `resolved_freelancer`, or `resolved_split`, alongside platform-wide KPIs and user suspension controls.
 
 ---
 
@@ -272,118 +261,6 @@ UPSTASH_REDIS_REST_TOKEN=...
 ```
 
 > The Socket.IO server (for real-time chat and notifications) requires a separate long-lived host (e.g., Railway or Render) since Vercel's serverless functions cannot maintain persistent WebSocket connections. Update `NEXT_PUBLIC_SOCKET_URL` once that deployment is finalized.
-
----
-
-## 💻 Local Development Setup
-
-### Prerequisites
-
-| Tool | Version | Installation |
-|------|---------|--------------|
-| Node.js | 20+ | [nodejs.org](https://nodejs.org) |
-| npm | 10+ | Bundled with Node.js |
-| Git | Latest | [git-scm.com](https://git-scm.com) |
-
-You will also need active accounts with: **Supabase** (PostgreSQL database), **Clerk** (authentication), **Razorpay** (payments, test mode), **Cloudinary** (file storage), **Upstash** (Redis, optional), and **HuggingFace** (AI API token, optional).
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/Rohit7606/SkillSphere.git
-cd SkillSphere
-```
-
-### 2. Install All Workspace Dependencies
-
-```bash
-npm install
-```
-
-npm workspaces installs dependencies for all three packages (`apps/web`, `server`, `packages/shared`) from the single root `package-lock.json` in one command.
-
-### 3. Configure Environment Variables
-
-```bash
-# Copy the root template (shared by Next.js and Express server)
-cp .env.example .env
-
-# Copy the web-specific template
-cp apps/web/.env.example apps/web/.env
-```
-
-Populate both files with the following variables:
-
-```bash
-# ── Database ──────────────────────────────────────────────────────
-DATABASE_URL=postgresql://postgres:password@db.xxx.supabase.co:5432/postgres
-NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...
-SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
-
-# ── Authentication (Clerk) ─────────────────────────────────────────
-CLERK_SECRET_KEY=sk_test_...
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
-CLERK_WEBHOOK_SECRET=whsec_...          # Optional
-
-# ── Payments (Razorpay) ───────────────────────────────────────────
-RAZORPAY_KEY_ID=rzp_test_...
-RAZORPAY_KEY_SECRET=...
-
-# ── File Storage (Cloudinary) ─────────────────────────────────────
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=...
-CLOUDINARY_API_SECRET=...
-
-# ── AI & Rate Limiting (optional but recommended) ─────────────────
-HUGGINGFACE_API_KEY=hf_...
-UPSTASH_REDIS_REST_URL=https://xxx.upstash.io
-UPSTASH_REDIS_REST_TOKEN=...
-
-# ── Real-Time (Socket.IO) ─────────────────────────────────────────
-NEXT_PUBLIC_SOCKET_URL=http://localhost:3001
-```
-
-> Without `HUGGINGFACE_API_KEY`, AI matching falls back to reputation-score-based sorting. Without `UPSTASH_REDIS_REST_URL`, AI rate limiting is disabled.
-
-### 4. Provision the Supabase Database
-
-Run Drizzle Kit to push the 11-table schema to your Supabase PostgreSQL project:
-
-```bash
-cd apps/web
-npx drizzle-kit push
-```
-
-This reads `lib/db/schema/index.ts` and creates all tables (`users`, `freelancers`, `clients`, `gigs`, `proposals`, `reviews`, `messages`, `payments`, `notifications`, `disputes`, `bookings`, `admin_logs`).
-
-### 5. Verify Database Connectivity
-
-```bash
-node -e "const pg = require('postgres'); const sql = pg(process.env.DATABASE_URL); sql\`SELECT 1\`.then(() => { console.log('Connected!'); process.exit(0); }).catch(e => { console.error(e); process.exit(1); });"
-```
-
-### 6. Start the Development Servers
-
-From the project root, `concurrently` starts both servers in parallel:
-
-```bash
-npm run dev
-```
-
-This launches:
-- **Next.js app** → `http://localhost:3000`
-- **Socket.IO server** → `http://localhost:3001`
-
-To start them independently in separate terminals:
-
-```bash
-# Terminal 1 — Next.js
-cd apps/web && npm run dev
-
-# Terminal 2 — Express Socket.IO
-cd server && npm run dev
-```
 
 ---
 

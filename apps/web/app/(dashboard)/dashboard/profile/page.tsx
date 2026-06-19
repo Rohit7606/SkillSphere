@@ -1,4 +1,5 @@
 import React from 'react';
+import { unstable_noStore as noStore } from 'next/cache';
 import { db } from '../../../../lib/db';
 import { users, freelancers, clients } from '../../../../lib/db/schema';
 import { eq } from 'drizzle-orm';
@@ -10,6 +11,7 @@ import { PortfolioGallery } from '../../../../components/profile/portfolio-galle
 import { PricingCard } from '../../../../components/profile/pricing-card';
 
 export default async function ProfilePage() {
+  noStore(); // Always fetch fresh data from DB
   const { userId: clerkId } = await auth();
   if (!clerkId) notFound();
 
