@@ -60,9 +60,9 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 
 ### Architecture & Workflow:
 
-<img width="1536" height="1024" alt="Image" src="https://github.com/user-attachments/assets/9cf482ed-653b-4359-9a5b-93ec1c8ff45c" />
-
 *Three-package monorepo showing the Next.js web app, Express Socket.IO server, and shared Zod schema library communicating with Supabase, Clerk, Razorpay, Cloudinary, HuggingFace, and Upstash Redis.*
+
+<img width="1536" height="1024" alt="Image" src="https://github.com/user-attachments/assets/9cf482ed-653b-4359-9a5b-93ec1c8ff45c" />
 
 1. **User Registration & Role Selection:** User signs up via Clerk (`<SignUp>`, email or Google OAuth), then picks a role on the onboarding page. The `onboardingAction` Server Action creates a `users` row plus a `clients` or `freelancers` profile, keyed by Clerk ID.
 
@@ -160,28 +160,29 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 <img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/fa051898-569f-4d52-bdf0-0b359a68bdd1" />
 <!-- Add screenshot: /dashboard/freelancers/[id] showing the full public profile with portfolio images, reputation score, skills, and review cards -->
 
+
 <details>
 <summary>👤 Client Role — Full Page Gallery</summary>
 
 ### Client — Create Gig Modal
 <!-- Add screenshot: CreateGigModal open on /dashboard/gigs, showing the form fields for title, description, budget, and location -->
-<img width="100%" alt="Create Gig Modal" src="PLACEHOLDER_SCREENSHOT_CLIENT_1" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/1786957c-e921-4c29-93e8-9a4e7441d4cf" />
 
 ### Client — Proposals Management
 <!-- Add screenshot: /dashboard/proposals showing incoming proposal cards with bid amounts, delivery days, and accept/decline action buttons -->
-<img width="100%" alt="Client Proposals Management" src="PLACEHOLDER_SCREENSHOT_CLIENT_2" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/19804bc2-a3b0-46cd-9ea3-0225468fd1f8" />
 
 ### Client — Escrow Payment (Razorpay Checkout)
 <!-- Add screenshot: Fund Escrow button triggering the Razorpay checkout modal overlay on the gig detail page -->
-<img width="100%" alt="Razorpay Escrow Payment Flow" src="PLACEHOLDER_SCREENSHOT_CLIENT_3" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/420a0628-5f9e-43d2-8767-2a9aced24496" />
 
 ### Client — Payment History
 <!-- Add screenshot: /dashboard/payments showing the payment history table with escrow status badges and the CSV export button -->
-<img width="100%" alt="Client Payment History" src="PLACEHOLDER_SCREENSHOT_CLIENT_4" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/2714fa57-4dcc-489c-8e44-e6aaf5dd22bd" />
 
 ### Client — Meeting Scheduler (Bookings)
 <!-- Add screenshot: /dashboard/bookings showing the BookMeetingModal and the bookings list with status badges -->
-<img width="100%" alt="Client Booking Scheduler" src="PLACEHOLDER_SCREENSHOT_CLIENT_5" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/86335e11-1a2e-489a-a9ee-9156cafbf8c2" />
 
 </details>
 
@@ -190,23 +191,23 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 
 ### Freelancer — Profile Editor with Portfolio Upload
 <!-- Add screenshot: /dashboard/profile in edit mode showing the profile header with avatar upload, skills section, hourly rate card, and portfolio gallery with Cloudinary upload controls -->
-<img width="100%" alt="Freelancer Profile Editor" src="PLACEHOLDER_SCREENSHOT_FL_1" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/236e03dc-2fc3-4301-b628-14d353c6254f" />
 
 ### Freelancer — Submit Proposal Modal
 <!-- Add screenshot: SubmitProposalModal open on a gig page, showing bid amount, delivery days, and description fields -->
-<img width="100%" alt="Freelancer Submit Proposal" src="PLACEHOLDER_SCREENSHOT_FL_2" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/ea024c33-3334-4e38-a2c0-309e5b738ebf" />
 
 ### Freelancer — Analytics Dashboard
 <!-- Add screenshot: /dashboard/analytics showing the Recharts earnings chart, KPI cards for profile views and active gigs, and the revenue breakdown -->
-<img width="100%" alt="Freelancer Analytics Dashboard" src="PLACEHOLDER_SCREENSHOT_FL_3" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/a481695d-0080-4393-9e69-0d8eb6622806" />
 
 ### Freelancer — Real-Time Chat with File Attachments
 <!-- Add screenshot: /dashboard/messages showing the ChatRoom component with message bubbles, typing indicator, and the file attachment upload button -->
-<img width="100%" alt="Real-Time Chat Interface" src="PLACEHOLDER_SCREENSHOT_FL_4" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/d3587918-ca9e-45f6-9f29-4d0adb5e40f7" />
 
 ### Freelancer — Reviews & Reputation Analytics
 <!-- Add screenshot: /dashboard/reviews showing review cards, the rating distribution chart (Recharts), and the verified badge on completed-gig reviews -->
-<img width="100%" alt="Reviews and Reputation Analytics" src="PLACEHOLDER_SCREENSHOT_FL_5" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/cd696385-6f93-4ea7-94c8-0b5cadc2774b" />
 
 </details>
 
@@ -255,10 +256,7 @@ UPSTASH_REDIS_REST_TOKEN=...
 | Authentication (Clerk) | ✅ **Stable** | JWT sessions, Google OAuth, email verification, onboarding flow active |
 | AI Matching (HuggingFace) | ✅ **Active** | `all-MiniLM-L6-v2` matching live; reputation-score fallback in place |
 | Escrow Payments (Razorpay) | 🔄 **In Progress** | Test mode functional; payment signature verification pending |
-| Admin RBAC | 🔄 **In Progress** | RBAC defined in middleware; enforcement temporarily disabled for MVP demo |
 | Production Deployment (Vercel) | ✅ **Production** | Frontend live at `skill-sphere-web-chi.vercel.app`; Socket.IO server deployment pending on a separate host (Railway/Render) |
-| Automated Test Suite | ⏳ **Planned** | No unit, integration, or E2E tests implemented yet |
-
 ---
 
 ## 🧠 ML Model Methodology
@@ -348,5 +346,5 @@ if (huggingFaceError) {
 
 <p align="center">
   <strong>Connecting the right talent to the right opportunity — intelligently, securely, locally.</strong><br>
-  Built with ⚡ by Rohit!
+  Built with ❤️ by Rohit!
 </p>
