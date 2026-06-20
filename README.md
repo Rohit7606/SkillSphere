@@ -1,6 +1,6 @@
 # SkillSphere — Hyperlocal AI-Powered Freelance Ecosystem 🌐
 
-<img width="1920" height="1440" alt="SkillSphere Hero Banner" src="PLACEHOLDER_HERO_IMAGE" />
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/7a95b78c-e44d-431a-b7a8-f2626fed10cc" />
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.2.6-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19.2.4-61DAFB?style=for-the-badge&logo=react)](https://react.dev)
@@ -11,8 +11,6 @@
 [![Razorpay](https://img.shields.io/badge/Razorpay-v2.9.6-02042B?style=for-the-badge&logo=razorpay)](https://razorpay.com)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-all--MiniLM--L6--v2-FFD21F?style=for-the-badge&logo=huggingface)](https://huggingface.co)
 [![Status](https://img.shields.io/badge/Status-Deployed-8B6CEF?style=for-the-badge)](https://skill-sphere-web-chi.vercel.app)
-
-> **Live in Production.** All 15 core modules are deployed and functional with live Supabase, Clerk, Razorpay (test mode), and HuggingFace integrations. This project was developed as a capstone for the **Nayoda Full-Stack Developer Internship Program**.
 
 ---
 
@@ -62,7 +60,8 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 
 ### Architecture & Workflow:
 
-<img width="2752" height="1536" alt="SkillSphere Architecture Diagram" src="PLACEHOLDER_HERO_IMAGE" />
+<img width="1536" height="1024" alt="Image" src="https://github.com/user-attachments/assets/9cf482ed-653b-4359-9a5b-93ec1c8ff45c" />
+
 *Three-package monorepo showing the Next.js web app, Express Socket.IO server, and shared Zod schema library communicating with Supabase, Clerk, Razorpay, Cloudinary, HuggingFace, and Upstash Redis.*
 
 1. **User Registration & Role Selection:** User signs up via Clerk (`<SignUp>`, email or Google OAuth), then picks a role on the onboarding page. The `onboardingAction` Server Action creates a `users` row plus a `clients` or `freelancers` profile, keyed by Clerk ID.
@@ -140,24 +139,25 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 
 ## 📸 System Visuals
 
-### 1. Dashboard Overview — Client & Freelancer KPI Hub
-*The main dashboard displays role-aware KPI cards (active gigs, total earnings, pending proposals, reputation score), a Recharts revenue/earnings line chart for the last 6 months, and a real-time activity feed — all rendered as Server Components fetching directly from Supabase.*
-<img width="100%" alt="SkillSphere Dashboard Overview" src="PLACEHOLDER_SCREENSHOT_1" />
-<!-- Add screenshot: Full dashboard page at /dashboard showing KPI cards, revenue chart, and activity feed for both Client and Freelancer roles -->
+### 1. Gig Detail Page — AI Match Panel & Milestone Tracker
 
-### 2. Gig Detail Page — AI Match Panel & Milestone Tracker
-*The gig detail page combines the AI-powered freelancer recommendation panel (showing top 5 candidates with cosine similarity percentages), the milestone progress tracker with approve/submit controls, and the inline Socket.IO chat room — the operational core of an active engagement.*
-<img width="100%" alt="Gig Detail Page with AI Match Panel" src="PLACEHOLDER_SCREENSHOT_2" />
+*The gig detail page combines the AI-powered freelancer recommendation panel, the milestone progress tracker with approve/submit controls, and the inline Socket.IO chat room — the operational core of an active engagement.*
+
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/2db865b5-81ab-4719-8378-054c10344183" />
 <!-- Add screenshot: /dashboard/gigs/[id] showing the AiMatchPanel with ranked freelancers, the ProjectProgressTracker with milestone statuses, and the ChatRoom component -->
 
-### 3. Advanced Search Engine with Location & Budget Filters
+### 2. Advanced Search Engine with Location & Budget Filters
+
 *The search page exposes PostgreSQL ILIKE text search across gig title, description, and location, with budget range sliders and a location text filter — returning up to 50 open gigs sorted by creation date.*
-<img width="100%" alt="SkillSphere Advanced Search Engine" src="PLACEHOLDER_SCREENSHOT_3" />
+
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/4c445a8f-b915-470e-9906-c9f62e4e1e4c" />
 <!-- Add screenshot: /dashboard/search showing the SearchEngine component with active filters and a populated results grid -->
 
-### 4. Freelancer Public Profile — Portfolio & Reputation
+### 3. Freelancer Public Profile — Portfolio & Reputation
+
 *The public freelancer profile page renders the portfolio gallery (Cloudinary-hosted images), computed reputation score, skills tag cloud, hourly rate pricing card, and verified review history — the trust signal surface visible to prospective clients before initiating contact.*
-<img width="100%" alt="Freelancer Public Profile Page" src="PLACEHOLDER_SCREENSHOT_4" />
+
+<img width="1920" height="1280" alt="Image" src="https://github.com/user-attachments/assets/fa051898-569f-4d52-bdf0-0b359a68bdd1" />
 <!-- Add screenshot: /dashboard/freelancers/[id] showing the full public profile with portfolio images, reputation score, skills, and review cards -->
 
 <details>
@@ -210,23 +210,6 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 
 </details>
 
-<details>
-<summary>🛡️ Admin Role — Full Page Gallery</summary>
-
-### Admin — Platform Overview Dashboard
-<!-- Add screenshot: /admin showing the admin KPI cards (total users, active gigs, total revenue, open disputes) and the user management table -->
-<img width="100%" alt="Admin Dashboard Overview" src="PLACEHOLDER_SCREENSHOT_ADMIN_1" />
-
-### Admin — User Management (Suspend / Activate)
-<!-- Add screenshot: /admin/users showing the user list table with the SuspendUserButton toggle for each row -->
-<img width="100%" alt="Admin User Management" src="PLACEHOLDER_SCREENSHOT_ADMIN_2" />
-
-### Admin — Dispute Resolution Interface
-<!-- Add screenshot: /admin/disputes showing open dispute cards with reason, evidence links, and the ResolveDisputeActions buttons (Resolve for Client / Freelancer / Split) -->
-<img width="100%" alt="Admin Dispute Resolution" src="PLACEHOLDER_SCREENSHOT_ADMIN_3" />
-
-</details>
-
 ---
 
 ## 🚀 Live Deployment
@@ -234,8 +217,6 @@ SkillSphere uses a **'Unified Monorepo' Architecture**. Unlike traditional freel
 #### Production URLs
 
 - **Frontend Application:** [`https://skill-sphere-web-chi.vercel.app`](https://skill-sphere-web-chi.vercel.app)
-- **Backend API:** PLACEHOLDER_BACKEND_URL
-- **API Documentation:** PLACEHOLDER_API_DOCS_URL
 
 #### Environment Configuration
 
@@ -367,5 +348,5 @@ if (huggingFaceError) {
 
 <p align="center">
   <strong>Connecting the right talent to the right opportunity — intelligently, securely, locally.</strong><br>
-  Built with ⚡ by PLACEHOLDER_AUTHOR_NAME
+  Built with ⚡ by Rohit!
 </p>
